@@ -1,26 +1,42 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import Shop from './components/Shop';
+import About from './components/AboutUs';
+import {BrowserRouter,Switch,Route} from 'react-router-dom';
 
-function App() {
+
+class App extends React.Component{
+  state = {
+    item:0
+  }
+
+  addItem = () => {
+    this.setState({
+      item:this.state.item +1
+    })
+  }
+
+
+render(){
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App"> 
+    <BrowserRouter>
+
+      <Navbar item={this.state.item}/>
+      
+      <Switch>
+        <Route path="/" component={Home} exact/>
+        <Route path="/aboutus" component={About}/>
+        <Route path="/shop" component={() => <Shop add={this.addItem}/>}/>
+        <Shop add={this.addItem}/>
+      </Switch>
+
+    </BrowserRouter>  
     </div>
   );
+}
 }
 
 export default App;
